@@ -1,0 +1,9 @@
+---
+submissionsBase: http://submissions.agileaustralia.com.au/
+signInPath: users/sign_in
+listPath: proposals?ps=all&s=
+itemPath: proposals/
+email: login@example.com
+password: someCred5
+channelMapping:
+    15: https://hooks.slack.com/services/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
