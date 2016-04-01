@@ -6,4 +6,4 @@ itemPath: proposals/
 email: login@example.com
 password: someCred5
 channelMapping:
-    15: https://hooks.slack.com/services/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
+    15: https://hooks.slack.com/services/.../.../...
