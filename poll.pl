@@ -11,7 +11,10 @@ use YAML;
 use Log::Log4perl;
 
 my $config = YAML::LoadFile('config.yaml');
-Log::Log4perl->easy_init(Log::Log4perl::Level::to_priority($config->{logLevel} || 'WARN'));
+Log::Log4perl->easy_init({
+  level => Log::Log4perl::Level::to_priority($config->{logLevel} || 'WARN'),
+  file  => ">>submissionbot.log"
+});
 
 Log::Log4perl->get_logger()->info('Starting poll...');
 my $submissionSite = SubmissionSite->new($config->{submissionsBase});

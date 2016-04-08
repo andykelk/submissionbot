@@ -60,7 +60,7 @@ sub loadState {
   Log::Log4perl->get_logger()->info('Loading state.');
   $self->{alreadySeen} = {};
   if (-e $self->{stateFile}) {
-    Log::Log4perl->get_logger()->info('State file exists.');
+    Log::Log4perl->get_logger()->debug('State file exists.');
     $self->{alreadySeen} = Storable::retrieve($self->{stateFile});
   }
 }
