@@ -30,7 +30,7 @@ sub createFromArrayRef {
 sub foreach {
   my ($self, $closure) = @_;
   foreach my $sub (@{$self->{subs}}) {
-    Log::Log4perl->get_logger()->debug('Foreach loop reached with sub : ' . Data::Dumper->Dump($sub));
+    Log::Log4perl->get_logger()->debug('Foreach loop reached with sub : ' . Dumper($sub));
     $closure->($sub);
   }
 }

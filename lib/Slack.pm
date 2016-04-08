@@ -23,7 +23,7 @@ sub sendMessage {
     text => "New submission received!\nTitle: $submission->{name}\n<$submission->{url}>"
   };
 
-  Log::Log4perl->get_logger()->debug('Message payload : ' . Data::Dumper->Dump($payload));
+  Log::Log4perl->get_logger()->debug('Message payload : ' . Dumper($payload));
 
   my $request = HTTP::Request->new('POST', $webhook);
   $request->header( 'Content-Type' => 'application/json' );
