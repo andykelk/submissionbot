@@ -1,4 +1,5 @@
 ---
+logLevel: WARN
 submissionsBase: http://submissions.agileaustralia.com.au/
 signInPath: users/sign_in
 listPath: proposals?ps=all&s=

@@ -4,6 +4,7 @@ use warnings;
 package Slack;
 
 use JSON;
+use Data::Dumper;
 
 sub new {
   my ($class) = @_;
@@ -22,6 +23,8 @@ sub sendMessage {
     text => "New submission received!\nTitle: $submission->{name}\n<$submission->{url}>"
   };
 
+  Log::Log4perl->get_logger()->debug('Message payload : ' . Data::Dumper->Dump($payload));
+
   my $request = HTTP::Request->new('POST', $webhook);
   $request->header( 'Content-Type' => 'application/json' );
   $request->content( JSON::encode_json($payload) );
@@ -29,6 +32,7 @@ sub sendMessage {
   my $response = $self->{ua}->request($request);
   
   unless ($response->is_success) {
+    Log::Log4perl->get_logger()->fatal('Webhook POST failed: ' . $response->status_line);
     die $response->status_line;
   } 
 }

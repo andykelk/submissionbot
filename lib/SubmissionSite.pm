@@ -24,6 +24,7 @@ sub login {
   my $response = $self->{ua}->get($url);
 
   unless ($response->is_success) {
+    Log::Log4perl->get_logger()->fatal('Login page GET failed: ' . $response->status_line);
     die $response->status_line;
   }
 
@@ -38,6 +39,7 @@ sub login {
   $response = $self->{ua}->post($url, $form);
 
   unless ($response->is_success) {
+    Log::Log4perl->get_logger()->fatal('Login POST failed: ' . $response->status_line);
     die $response->status_line;
   }
 }
@@ -48,6 +50,7 @@ sub getList {
   my $response = $self->{ua}->get($self->{basePath} . $listPath . $streamId);
 
   unless ($response->is_success) {
+    Log::Log4perl->get_logger()->fatal('Submission list GET failed: ' . $response->status_line);
     die $response->status_line;
   }
 
