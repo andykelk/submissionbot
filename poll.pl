@@ -23,7 +23,7 @@ Log::Log4perl->get_logger()->debug('Logged in.');
 my $slack = Slack->new();
 foreach my $streamId (keys %{$config->{channelMapping}}) {
   Log::Log4perl->get_logger()->info('Getting list for ' . $streamId . '.');
-  my $submissions = $submissionSite->getList($config->{listPath}, $config->{itemPath}, $streamId);
+  my $submissions = $submissionSite->getList($config->{itemPath}, $streamId);
   $submissions->removeAlreadySeen();
   my $sender = sub {$slack->sendMessage(shift, $config->{channelMapping}->{$streamId})};
   $submissions->foreach($sender);

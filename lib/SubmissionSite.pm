@@ -45,9 +45,25 @@ sub login {
 }
 
 sub getList {
-  my ($self, $listPath, $itemPath, $streamId) = @_;
+  my ($self, $itemPath, $streamId) = @_;
 
-  my $response = $self->{ua}->get($self->{basePath} . $listPath . $streamId);
+  my $url = $self->{basePath} . $itemPath;
+  my $response = $self->{ua}->get($url);
+
+  unless ($response->is_success) {
+    Log::Log4perl->get_logger()->fatal('Proposals page GET failed: ' . $response->status_line);
+    die $response->status_line;
+  }
+
+  my $proposalsPage = HTML::TreeBuilder->new;
+  $proposalsPage->parse($response->content);
+  $proposalsPage->eof;
+
+  my $token = $proposalsPage->look_down(_tag => 'input', name => 'authenticity_token')->attr('value');
+
+  my $form = ['search[ps]' => 'all', 'search[s]' => $streamId, authenticity_token => $token, utf8 => '&#x2713;', 'commit' => 'search'];
+
+  $response = $self->{ua}->post($self->{basePath} . "/searches", $form);
 
   unless ($response->is_success) {
     Log::Log4perl->get_logger()->fatal('Submission list GET failed: ' . $response->status_line);
